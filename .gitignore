@@ -1,4 +1,52 @@
-.idea/
+# Python bytecode
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Environment files
+.env
+.venv/
+venv/
+env/
+ENV/
+
+# IDE folders
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# SQLite and other local DBs
+*.sqlite3
+*.db
+
+# Temporary files
+*.bak
+*.swp
+*.tmp
+
+# Compiled C extensions
+*.so
+
+# macOS metadata
+*.DS_Store
+
+# Project-specific
 currencies.txt
+currency_data.csv
+
+# Images or assets
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.ico
+
+# Only ignore icon used during testing
+daily_income_calculator/Calculator_icon.svg.png
+

@@ -3,6 +3,7 @@ from PIL import Image, ImageTk, ImageFile
 from typing import Callable, Tuple
 
 
+
 def load_calculator_page() -> None:
     pass
 

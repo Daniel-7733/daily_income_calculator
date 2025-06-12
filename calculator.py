@@ -105,17 +105,17 @@ def calculate_13_day_ahead() -> Tuple[str,str]:
     return today.strftime('%Y-%m-%d'), fourteen_days_ahead.strftime('%Y-%m-%d')
 
 
-def main() -> None:
-
-    while True:
-        today, fourteen_days_ahead = calculate_13_day_ahead()
-        print("\n", "Today:", today)
-        print("14 days ahead:", fourteen_days_ahead, "\n")
-
-        calculator("TRY")
-        exit: str = input("Do you want to finish? (yes or no)").strip().upper()
-        if exit == 'Yes':
-            break
-
-if __name__ == '__main__':
-    main()
+# def main() -> None:
+#
+#     while True:
+#         today, fourteen_days_ahead = calculate_13_day_ahead()
+#         print("\n", "Today:", today)
+#         print("14 days ahead:", fourteen_days_ahead, "\n")
+#
+#         calculator("TRY")
+#         exit: str = input("Do you want to finish? (yes or no)").strip().upper()
+#         if exit == 'Yes':
+#             break
+#
+# # if __name__ == '__main__':
+# #     main()
