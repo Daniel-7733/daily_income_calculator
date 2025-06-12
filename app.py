@@ -7,7 +7,7 @@ def load_calculator_page() -> None:
     pass
 
 
- # TODO: (In create_menu_button) I would like to highlight the buttom that I am on it; that will show the person, which page he or she is on it
+ # TODO: (In create_menu_button) I would like to highlight the bottom that I am on it; that will show the person, which page he or she is on it
 def create_menu_button(parent: Widget, image_path: str, size: Tuple[int, int], command: Callable[[], None]) -> Button:
     """Creates a sidebar/menu button with an image and click action.
 
@@ -64,7 +64,7 @@ def main() -> None:
     content_frame.grid(row=1, column=0, sticky="nsew")
 
     # Menu button
-    create_menu_button(menu_frame, r"daily_income_calculator\Calculator_icon.svg.png", (32, 32), load_calculator_page)
+    create_menu_button(menu_frame, "Calculator_icon.svg.jpg", (32, 32), load_calculator_page)
 
     window.mainloop()
 
