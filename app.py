@@ -1,14 +1,84 @@
-from tkinter import Tk, Button, Frame, PhotoImage, Widget
+from tkinter import Tk, Button, Frame, Widget, Text, Label, Entry
 from PIL import Image, ImageTk, ImageFile
 from typing import Callable, Tuple
 
 
 
+def page_reset() -> None:
+    """
+    Clear previous content.
+
+    Returns:
+        None
+    """
+
+    for widget in content_frame.winfo_children():
+        widget.destroy()  # Clear previous content
+
+def add() -> str:
+    return "Add() function isn't complete"
+
+
+def finish() -> str:
+    return "finish() function isn't complete"
+
+
 def load_calculator_page() -> None:
-    pass
+
+    page_reset()
+
+    screen: Text = Text(content_frame, height=10, width=250, bg='#ff6600', font=('TkFixFont', 10))
+    screen.config(state='disabled')
+    screen.pack(padx=30, pady=30)
+
+    # TODO: Add a Label which is "Amount"
+    Label(content_frame,
+          text="Amount:",
+          bg='#a3c3ff',
+          font=('Arial', 12, 'bold')).pack()
+    # TODO: Add a Entry which is for "Amount"
+    amount_entry: Entry = Entry(content_frame, font=('Arial', 11))
+    amount_entry.pack()
+
+    # TODO: Add a Label which is "Currency symbol"
+    Label(content_frame,
+          text="Currency symbol:",
+          bg='#a3c3ff',
+          font=('Arial', 12, 'bold')).pack()
+    # TODO: Add a Entry which is for "Currency symbol"
+    symbol_entry: Entry = Entry(content_frame, font=('Arial', 11))
+    symbol_entry.pack()
+
+    # TODO: Add a Label which is "Rate"
+    Label(content_frame,
+          text="Rate:",
+          bg='#a3c3ff',
+          font=('Arial', 12, 'bold')).pack()
+    # TODO: Add a Entry which is for "Rate"
+    rate_entry: Entry = Entry(content_frame, font=('Arial', 11))
+    rate_entry.pack()
+
+    # TODO: Add a "ADD" button for adding my numbers for calculation
+    add_button: Button = Button(content_frame,
+                                 text='Add',
+                                 bg="#08e966",
+                                 fg='black',
+                                 font=('Arial', 11, 'bold'),
+                                 width=10,
+                                 command=lambda: add)
+    add_button.pack()
+    # TODO: Add a "Finish" button for saying done; which means there is no other input left to calculate
+    finish_button: Button = Button(content_frame,
+                                 text='Finish',
+                                 bg="#08e966",
+                                 fg='black',
+                                 font=('Arial', 11, 'bold'),
+                                 width=10,
+                                 command=lambda: finish)
+    finish_button.pack()
 
 
- # TODO: (In create_menu_button) I would like to highlight the bottom that I am on it; that will show the person, which page he or she is on it
+# TODO: (In create_menu_button) I would like to highlight the bottom that I am on it; that will show the person, which page he or she is on it
 def create_menu_button(parent: Widget, image_path: str, size: Tuple[int, int], command: Callable[[], None]) -> Button:
     """Creates a sidebar/menu button with an image and click action.
 
@@ -45,7 +115,7 @@ def create_menu_button(parent: Widget, image_path: str, size: Tuple[int, int], c
 
 
 
-def main() -> None:
+if __name__ == '__main__':
     window: Tk = Tk()
     window.geometry("350x600")
     window.title("Currency Converter")
@@ -70,5 +140,5 @@ def main() -> None:
     window.mainloop()
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

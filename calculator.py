@@ -3,7 +3,6 @@ from typing import Tuple, List
 from tabulate import tabulate
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
@@ -58,7 +57,7 @@ def float_checker(printable_name: str) -> float:
         except ValueError:
             print(f"Enter {printable_name}!")
 
-def intager_checker(printable_name) -> int:
+def integer_checker(printable_name) -> int:
     while True:
         count: int = int(input(printable_name))
         try:
@@ -88,7 +87,7 @@ def calculator(escape_symbol: str) -> None:
             break
 
     result: float = sum(num_list)
-    night: int = intager_checker("Enter number of night: ")
+    night: int = integer_checker("Enter number of night: ")
     income_per_night: float = result / night
 
     items: List[List[str]] = [
