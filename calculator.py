@@ -1,16 +1,18 @@
-from datetime import datetime, timedelta
-from typing import Tuple, List
 from tabulate import tabulate
 from selenium import webdriver
+from typing import Tuple, List
+from datetime import datetime, timedelta
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions as EC
+
 
 
 currencies_txt: str = 'currencies.txt'
 
 def web_scraper() -> None:
+    # TODO: This function need to update currency symbol update each month. (But I need to keep the original information in case if the site change
 
     driver: webdriver = webdriver.Chrome()
     driver.get('https://www.xe.com/currency/')
@@ -82,7 +84,7 @@ def calculator(escape_symbol: str) -> None:
             result_in_lira: float = amount * rate
             num_list.append(result_in_lira)
 
-        end: str = input("Do you want to countuinue? (yes or no or leave it empty if you wish yes)\n").strip().lower()
+        end: str = input("Do you want to continue? (yes or no or leave it empty if you wish yes)\n").strip().lower()
         if end == 'no':
             break
 
