@@ -1,6 +1,9 @@
-from tkinter import Tk, Button, Frame, Widget, Text, Label, Entry
+from tkinter import Tk, Button, Frame, Widget, Label, Entry, StringVar
+from calculator import add_amount, calculate_total
 from PIL import Image, ImageTk, ImageFile
 from typing import Callable, Tuple
+from tkinter.ttk import Separator
+
 
 
 
@@ -14,70 +17,6 @@ def page_reset() -> None:
 
     for widget in content_frame.winfo_children():
         widget.destroy()  # Clear previous content
-
-def add() -> str:
-    # this one will add input to the list
-    return "Add() function isn't complete"
-
-
-def finish() -> str:
-    # this function suppose to calculate all the inputs and show them on screen
-    return "finish() function isn't complete"
-
-
-def load_calculator_page() -> None:
-
-    page_reset()
-
-    screen: Text = Text(content_frame, height=10, width=250, bg='#ff6600', font=('TkFixFont', 10))
-    screen.config(state='disabled')
-    screen.pack(padx=30, pady=30)
-
-    # TODO: Add a Label which is "Amount"
-    Label(content_frame,
-          text="Amount:",
-          bg='#a3c3ff',
-          font=('Arial', 12, 'bold')).pack()
-    # TODO: Add a Entry which is for "Amount"
-    amount_entry: Entry = Entry(content_frame, font=('Arial', 11))
-    amount_entry.pack()
-
-    # TODO: Add a Label which is "Currency symbol"
-    Label(content_frame,
-          text="Currency symbol:",
-          bg='#a3c3ff',
-          font=('Arial', 12, 'bold')).pack()
-    # TODO: Add a Entry which is for "Currency symbol"
-    symbol_entry: Entry = Entry(content_frame, font=('Arial', 11))
-    symbol_entry.pack()
-
-    # TODO: Add a Label which is "Rate"
-    Label(content_frame,
-          text="Rate:",
-          bg='#a3c3ff',
-          font=('Arial', 12, 'bold')).pack()
-    # TODO: Add a Entry which is for "Rate"
-    rate_entry: Entry = Entry(content_frame, font=('Arial', 11))
-    rate_entry.pack()
-
-    # TODO: Add a "ADD" button for adding my numbers for calculation
-    add_button: Button = Button(content_frame,
-                                 text='Add',
-                                 bg="#08e966",
-                                 fg='black',
-                                 font=('Arial', 11, 'bold'),
-                                 width=10,
-                                 command=lambda: add)
-    add_button.pack()
-    # TODO: Add a "Finish" button for saying done; which means there is no other input left to calculate
-    finish_button: Button = Button(content_frame,
-                                 text='Finish',
-                                 bg="#08e966",
-                                 fg='black',
-                                 font=('Arial', 11, 'bold'),
-                                 width=10,
-                                 command=lambda: finish)
-    finish_button.pack()
 
 
 # TODO: (In create_menu_button) I would like to highlight the bottom that I am on it; that will show the person, which page he or she is on it
@@ -116,31 +55,44 @@ def create_menu_button(parent: Widget, image_path: str, size: Tuple[int, int], c
 
 
 
-
-if __name__ == '__main__':
+def main() -> None:
     window: Tk = Tk()
-    window.geometry("350x600")
-    window.title("Currency Converter")
-    window.config(bg="#b3c6ff")
+    window.title("Daily Income Calculator")
+    window.geometry("400x500")
+    window.config(bg="#e6f0ff")
 
-    # === Grid layout with 2 rows ===
-    window.grid_rowconfigure(1, weight=1)  # content frame should expand
-    window.grid_columnconfigure(0, weight=1)  # only one column
+    # === Input Fields ===
+    amount_var: StringVar = StringVar()
+    symbol_var: StringVar = StringVar()
+    rate_var: StringVar = StringVar()
+    nights_var: StringVar = StringVar()
 
-    # Top menu/sidebar (like a navigation bar)
-    menu_frame: Frame = Frame(window, bg='#595959', height=100)
-    menu_frame.grid(row=3, column=0, sticky="ew")
-    menu_frame.grid_propagate(False)
+    Label(window, text="💰 Amount:", bg="#e6f0ff").pack()
+    Entry(window, textvariable=amount_var).pack()
 
-    # Main content frame
-    content_frame: Frame = Frame(window, bg="#b3c6ff")
-    content_frame.grid(row=1, column=0, sticky="nsew")
+    Label(window, text="💱 Currency Symbol (e.g., USD, TRY):", bg="#e6f0ff").pack()
+    Entry(window, textvariable=symbol_var).pack()
 
-    # Menu button
-    create_menu_button(menu_frame, "calculator_icon.png", (32, 32), load_calculator_page) # icons link: https://www.flaticon.com/free-icons/calculator
+    Label(window, text="📈 Conversion Rate to TRY:", bg="#e6f0ff").pack()
+    Entry(window, textvariable=rate_var).pack()
+
+    result_label: Label = Label(window, text="", bg="#e6f0ff")
+    result_label.pack(pady=5)
+
+    Button(window, text="➕ Add", command=lambda: add_amount(amount_var, symbol_var, rate_var, result_label)).pack(pady=10)
+
+    Separator(window).pack(pady=5, fill='x')
+
+    Label(window, text="🌙 Nights:", bg="#e6f0ff").pack()
+    Entry(window, textvariable=nights_var).pack()
+
+    total_label: Label = Label(window, text="", bg="#e6f0ff")
+    total_label.pack(pady=10)
+
+    Button(window, text="✅ Calculate", command=lambda: calculate_total(nights_var, total_label)).pack(pady=10)
 
     window.mainloop()
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

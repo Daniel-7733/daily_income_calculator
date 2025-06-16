@@ -1,15 +1,16 @@
-from tabulate import tabulate
-from selenium import webdriver
-from typing import Tuple, List
-from datetime import datetime, timedelta
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from tkinter import Label, StringVar
+from selenium import webdriver
+from typing import List
+
 
 
 
 currencies_txt: str = 'currencies.txt'
+
 
 def web_scraper() -> None:
     # TODO: This function need to update currency symbol update each month. (But I need to keep the original information in case if the site change
@@ -27,12 +28,12 @@ def web_scraper() -> None:
             for currency in currencies:
                 file.write(currency.text.replace(" -", "") + '\n')
 
-
     except Exception as e:
         print("❌ Error occurred:", e)
 
     finally:
         driver.quit()
+
 
 def text_opener() -> List[str]:
     with open(currencies_txt, 'r') as file:
@@ -59,6 +60,7 @@ def float_checker(printable_name: str) -> float:
         except ValueError:
             print(f"Enter {printable_name}!")
 
+
 def integer_checker(printable_name) -> int:
     while True:
         count: int = int(input(printable_name))
@@ -68,55 +70,38 @@ def integer_checker(printable_name) -> int:
             print(f"Enter {printable_name}!")
 
 
-def calculator(escape_symbol: str) -> None:
+# Global list to hold income in TRY
+num_list: List[float] = []
 
-    num_list: List[float] = []
+def add_amount(amount_var: StringVar, symbol_var: StringVar, rate_var: StringVar, result_label: Label) -> None:
+    try:
+        amount: float = float(amount_var.get())
+        symbol: str = symbol_var.get().upper()
+        rate: float = float(rate_var.get())
 
-    while True:
-       
-        amount: float = float_checker("Enter the amount: ")
-        symbol: str = symbol_checker()
-        
-        if symbol == escape_symbol:
-            num_list.append(amount)
+        if symbol == "TRY":
+            num_list.append(amount) # TODO: This part need some changes because it doesn't need rate (rate is 1)
         else:
-            rate: float = float_checker("Enter the rate: ")
-            result_in_lira: float = amount * rate
-            num_list.append(result_in_lira)
+            result: float = amount * rate
+            num_list.append(result)
 
-        end: str = input("Do you want to continue? (yes or no or leave it empty if you wish yes)\n").strip().lower()
-        if end == 'no':
-            break
-
-    result: float = sum(num_list)
-    night: int = integer_checker("Enter number of night: ")
-    income_per_night: float = result / night
-
-    items: List[List[str]] = [
-        [f"Total rate for {night} night", f"{result:,.8f} TRY", f"{result:,.2f} TRY"],
-        [f"Per night", f"{income_per_night:,.8f} TRY", f"{income_per_night:,.2f} TRY"]
-    ]
-    headers: List[str] = ["Type", "Full Amount", "Rounded amount"]
-    print("\n", tabulate(items, headers=headers, tablefmt="grid"), "\n")
+        result_label.config(text=f"✅ Added: {num_list[-1]:,.2f} TRY", fg="green")
+    except ValueError:
+        result_label.config(text="⚠️ Please enter valid numbers", fg="red")
 
 
-def calculate_13_day_ahead() -> Tuple[str,str]:
-    today: datetime = datetime.today()
-    fourteen_days_ahead: datetime = today + timedelta(days=13)
-    return today.strftime('%Y-%m-%d'), fourteen_days_ahead.strftime('%Y-%m-%d')
+def calculate_total(nights_var: StringVar, total_label: Label) -> None:
+    try:
+        nights: int = int(nights_var.get())
+        total: float = sum(num_list)
+        per_night: float = total / nights
+        total_label.config(
+            text=f"Total: {total:,.2f} TRY\nPer Night: {per_night:,.2f} TRY", fg="blue"
+        )
+    except (ValueError, ZeroDivisionError):
+        total_label.config(text="⚠️ Please enter a valid number of nights", fg="red")
 
 
-# def main() -> None:
-#
-#     while True:
-#         today, fourteen_days_ahead = calculate_13_day_ahead()
-#         print("\n", "Today:", today)
-#         print("14 days ahead:", fourteen_days_ahead, "\n")
-#
-#         calculator("TRY")
-#         exit: str = input("Do you want to finish? (yes or no)").strip().upper()
-#         if exit == 'Yes':
-#             break
-#
-# # if __name__ == '__main__':
-# #     main()
+# TODO: I need a function to save data and give PDF as a report at the end.
+def report() -> None:
+    raise NotImplementedError("report() Is not built yet")
