@@ -16,10 +16,12 @@ def page_reset() -> None:
         widget.destroy()  # Clear previous content
 
 def add() -> str:
+    # this one will add input to the list
     return "Add() function isn't complete"
 
 
 def finish() -> str:
+    # this function suppose to calculate all the inputs and show them on screen
     return "finish() function isn't complete"
 
 
@@ -135,7 +137,7 @@ if __name__ == '__main__':
     content_frame.grid(row=1, column=0, sticky="nsew")
 
     # Menu button
-    create_menu_button(menu_frame, "Calculator_icon.svg.jpg", (32, 32), load_calculator_page)
+    create_menu_button(menu_frame, "calculator_icon.png", (32, 32), load_calculator_page) # icons link: https://www.flaticon.com/free-icons/calculator
 
     window.mainloop()
 
