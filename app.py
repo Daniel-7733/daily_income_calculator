@@ -1,7 +1,7 @@
 from tkinter import Tk, Label, Entry, Button, StringVar, filedialog
 from typing import List, Dict, Union
-from tkinter.ttk import Separator
 from fpdf.enums import XPos, YPos
+from tkinter.ttk import Separator
 from csv import DictWriter
 from fpdf import FPDF
 
@@ -49,7 +49,7 @@ def calculate_total(nights_var: StringVar, total_label: Label) -> None:
 
 # === Save as PDF ===
 def save(nights_var: StringVar) -> None:
-    pdf = FPDF()
+    pdf: FPDF = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
     pdf.cell(200, 10, text="Daily Income Report", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align='C')
@@ -58,7 +58,7 @@ def save(nights_var: StringVar) -> None:
     pdf.set_font("Arial", size=11)
     pdf.cell(0, 10, text="Inputs:", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
-    converted_entries = [entry for entry in entries if "converted" in entry]
+    converted_entries: list[dict[str, float | str]] = [entry for entry in entries if "converted" in entry]
     for idx, entry in enumerate(converted_entries, start=1):
         line = f"{idx}. {entry['amount']} {entry['symbol']} @ {entry['rate']} -> {entry['converted']:,.2f} TRY"
         pdf.multi_cell(0, 10, text=line)
@@ -75,7 +75,7 @@ def save(nights_var: StringVar) -> None:
     except (ValueError, ZeroDivisionError):
         pdf.multi_cell(0, 10, text="⚠️ Could not calculate summary: invalid number of nights.")
 
-    file_path = filedialog.asksaveasfilename(
+    file_path: str = filedialog.asksaveasfilename(
         defaultextension=".pdf",
         filetypes=[("PDF files", "*.pdf")],
         title="Save PDF As"
